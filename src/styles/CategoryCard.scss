@@ -1,0 +1,33 @@
+.category-card {
+
+    text-decoration: none;
+    cursor: pointer;
+    transition: .2s;
+
+    &:hover {
+        filter: brightness(0.9);
+    }
+
+    &__image {
+        width: 233px;
+        height: 133px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    &__name {
+        color: #000;
+        margin: 0;
+        text-transform: uppercase;
+        font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+        &__image {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+    }
+}

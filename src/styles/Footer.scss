@@ -1,0 +1,36 @@
+.footer {
+    background: #000;
+    padding: 20px 0;
+    margin-top: 50px;
+
+    &__content {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+
+    &__title {
+        color: hsla(0,0%,100%,.4);
+        font-size: 17px;
+        font-weight: 600;
+        line-height: 130%;
+        margin-bottom: 0;
+    }
+
+    &__subtitle {
+        color: #fff;
+        display: block;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 130%;
+        margin-top: 11px;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+        &__content {
+            flex-direction: column;
+        }
+    }
+}
