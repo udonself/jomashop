@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { Category } from "../schemas/category";
+import { ICategory } from "../schemas/category";
 import '../styles/CategoryCard.scss';
 
-const CategoryCard: React.FC<Category> = ({id, imageUrl, name}) => {
+const CategoryCard: React.FC<ICategory> = ({id, imageUrl, name}) => {
     return (
         <Link to={`category/${id}`} className="category-card">
             <img className="category-card__image" src={imageUrl} alt="category" />

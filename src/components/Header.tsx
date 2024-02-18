@@ -25,11 +25,14 @@ const Header: React.FC = () => {
                 </div>
             </div>
             <div className="header__navline container">
-                <img
-                    className="logo"
-                    src={logo}
-                    alt="logo"
-                />
+                <a href='/'>
+                    <img
+                        className="logo"
+                        src={logo}
+                        alt="logo"
+                    />
+                </a>
+                
                 <div className="searh-container">
                     <input
                         id="search-input"
@@ -40,9 +43,14 @@ const Header: React.FC = () => {
                     <img id='search-icon' src={searchIcon} alt="search" />
                 </div>
                 <div className="navicons">
-                    <img src={profileIcon} alt="profile" />
-                    <img src={likeIcon} alt="like" />
-                    <img src={cartIcon} alt="cart" />
+                    <a href='/profile'>
+                        <img src={profileIcon} alt="profile" />
+                    </a>
+                    {/* <img src={likeIcon} alt="like" /> */}
+                    <a href='/cart'>
+                        <img src={cartIcon} alt="cart" />
+                    </a>
+                    
                 </div>
             </div>
         </header>

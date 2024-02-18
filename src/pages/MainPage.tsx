@@ -3,12 +3,13 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 import CategoryCard from "../components/CategoryCard";
-import { Category } from "../schemas/category";
+
+import { ICategory } from "../schemas/category";
 import promotionImage from '../images/promo.jpg';
 import '../styles/MainPage.scss';
 
 const MainPage: React.FC = () => {
-    const [categories, setCategories] = useState<Category[] | null>(null);
+    const [categories, setCategories] = useState<ICategory[] | null>(null);
     
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_BASE_API_URL}/categories/get`).then(response => {

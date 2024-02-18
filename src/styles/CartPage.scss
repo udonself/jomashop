@@ -1,0 +1,29 @@
+.cart-page {
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .title {
+        margin: 0;
+    }
+
+    &__create-order {
+        width: 100%;
+        max-width: 450px;
+        background: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px 0;
+        color: #fff;
+        border-radius: 10px;
+        font-size: 22px;
+        align-self: end;
+        cursor: pointer;
+    }
+
+    &__total-price {
+        align-self: end;
+    }
+}

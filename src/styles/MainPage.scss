@@ -13,7 +13,15 @@
 .categories {
     margin-top: 13px;
     display: flex;
-    gap: 20px;
-    justify-content: center;
+    // gap: 20px;
+    // justify-content: center;
+    // gap: 5px;
+    justify-content: space-between;
     flex-wrap: wrap;
+
+    @media (max-width: 768px) {
+        & {
+            gap: 2%;
+        }
+    }
 }
