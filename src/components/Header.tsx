@@ -8,9 +8,19 @@ import likeIcon from '../icons/like-icon.svg';
 import cartIcon from '../icons/cart-icon.svg';
 import searchIcon from '../icons/search-icon.svg';
 import '../styles/Header.scss';
+import { KeyObject } from "crypto";
+import { keyboard } from "@testing-library/user-event/dist/keyboard";
 
 const Header: React.FC = () => {
     const [searchText, setSearchText] = useState<string>('');
+
+    const searchProducts = () => {
+        if(searchText.length < 1) return;
+
+        let searchWindow = window.open('', '_blank');
+        if (searchWindow)
+            searchWindow.location.href = `${window.location.origin}/products/search/${searchText}`;
+    }
 
     return (
         <header className="header">
@@ -38,9 +48,16 @@ const Header: React.FC = () => {
                         id="search-input"
                         type="text"
                         placeholder="Название продукта или бренда..."
-                        onChange={(e) => setSearchText(e.target.value)}
+                        onChange={(e) => {
+                            setSearchText(e.target.value)
+                            }
+                        }
+                        onKeyDown={(e) => {
+                            if(e.key === "Enter")
+                                searchProducts()
+                        }}
                     />
-                    <img id='search-icon' src={searchIcon} alt="search" />
+                    <img id='search-icon' src={searchIcon} alt="search" onClick={searchProducts}/>
                 </div>
                 <div className="navicons">
                     <a href='/profile'>

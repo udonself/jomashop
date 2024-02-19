@@ -7,28 +7,26 @@ import { IProductCard } from "../schemas/productcard";
 import ProductCard from "../components/ProductCard";
 import '../styles/ProductsPage.scss';
 
-const ProductsPage: React.FC = () => {
-    const { categoryId } = useParams<{ categoryId: string}>();
-    const [category, setCategory] = useState<string>('');
+const SearchPage: React.FC = () => {
+    const { pattern } = useParams<{ pattern: string}>();
     const [products, setProducts] = useState<IProductCard[] | null>(null);
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_BASE_API_URL}/products/${categoryId}`).then(response => {
+        axios.get(`${process.env.REACT_APP_BASE_API_URL}/products/search/${pattern}`).then(response => {
             const data = response.data;
-            setCategory(data.category);
-            setProducts(data.products);
+            setProducts(data);
           })
           .catch(error => {});
     }, []);
 
     return (
         <div className="products-page container">
-            <h1>{category}</h1>
+            <h1>Результат поиска по запросу: {pattern}</h1>
             <div className="products">
                 {
                     products ?
                         products.length == 0 ?
-                            <h1 className="products-page__title">Товаров пока нет</h1>
+                            <h1 className="products-page__title">Товары не найдены</h1>
                         : products.map(product => <ProductCard {...product}/>)
                     : <h1 className="products-page__title">Загрузка...</h1>
                 } 
@@ -37,4 +35,4 @@ const ProductsPage: React.FC = () => {
     )
 }
 
-export default ProductsPage;
+export default SearchPage;

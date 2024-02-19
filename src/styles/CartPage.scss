@@ -25,5 +25,61 @@
 
     &__total-price {
         align-self: end;
+        font-size: 20px;
+    }
+
+    .separator {
+        background: #efefef;
+        height: 2px;
+        width: 100%;
+        border: none;
+    }
+
+
+    .order-details {
+        width: 100%;
+        max-width: 450px;
+        // background: #cfcfcf;
+        align-self: end;
+
+        &__row {
+            display: flex;
+            align-items: flex-start;
+        }
+
+        &__column {
+            display: flex;
+            flex-direction: column;
+        }
+
+        &__input {
+            width: 100%;
+            border-radius: 10px;
+            background: transparent;
+            border: 1px #adadad solid;
+            padding: 5px 5px;
+            height: 40px;
+            font-size: 17px;
+        }
+
+        &__title {
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .row2 {
+            gap: 5%;
+        }
+        .column2 {
+            width: 47.5%;
+        }
+
+        .row3 {
+            gap: 5%;
+            margin-top: 10px;
+        }
+        .column3 {
+            width: 30%;
+        }
     }
 }

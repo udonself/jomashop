@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import MainPage from './pages/MainPage';
+import SearchPage from './pages/SearchPage';
+import ProfilePage from './pages/ProfilePage';
 import CartPage from './pages/CartPage';
 import LoginPage from './pages/LoginPage';
 import ProductsPage from './pages/ProductsPage';
@@ -23,6 +25,8 @@ const App: React.FC = () => {
           <Route path="/category/:categoryId" Component={ProductsPage}/>
           <Route path="/products/:productId?" Component={ItemPage} />
           <Route path="/cart" Component={CartPage} />
+          <Route path="/profile" Component={ProfilePage}/>
+          <Route path="/products/search/:pattern" Component={SearchPage}/>
           {/* <Route path="/products/search/:searchQuery" Component={ProductsPage} /> */}
         </Routes>
       </BrowserRouter>

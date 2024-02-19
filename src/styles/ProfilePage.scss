@@ -1,0 +1,57 @@
+.profile-page {
+    min-height: 600px;
+
+    .orders-container {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+}
+
+.order-card {
+    width: 100%;
+    // max-width: 350px;
+    border: 2px #000 solid;
+    border-radius: 10px;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    
+    &__column {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+
+    &__number {
+        margin: 0;
+        font-size: 30px;
+    }
+
+    &__price {
+        margin-top: 25px;
+        font-size: 24px;
+    }
+
+    &__date {
+        margin: 0;
+        font-size: 24px;
+    }
+
+    @media (max-width: 500px){
+        &__number {
+            font-size: 24px;
+        }
+    
+        &__price {
+            font-size: 16px;
+        }
+    
+        &__date {
+            font-size: 16px;
+        }
+    }
+}
