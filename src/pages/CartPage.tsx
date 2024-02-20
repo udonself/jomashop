@@ -19,6 +19,8 @@ const CartPage: React.FC = () => {
     const [house, setHouse] = useState<string>('');
     const [apartment, setApartment] = useState<string>('');
 
+    const [error, setError] = useState<string>('');
+
     const navigate = useNavigate();
 
     const placeOrderClick = () => {
@@ -26,6 +28,27 @@ const CartPage: React.FC = () => {
             setIsPlacingOrder(true);
             return;
         }
+        if(!/^\+{0,1}375(17|25|29|33|44)\d{7}$/.test(phone)){
+            setError('Некорректный номер телефона!');
+            return;
+        }
+        else if(city.length == 0){
+            setError('Введите город!');
+            return;
+        }
+        else if(street.length == 0){
+            setError('Введите улицу!');
+            return;
+        }
+        else if(!/\d/.test(house)){
+            setError('Введите корректный номер дома!');
+            return;
+        }
+        else if(!/\d/.test(apartment)){
+            setError('Введите корректный номер квартиры!');
+            return;
+        }
+
         // create order
         let token = Cookies.get('token');
         if (!token) {
@@ -118,6 +141,9 @@ const CartPage: React.FC = () => {
                                                 <input type="text" className="order-details__input" value={apartment} onChange={(e) => setApartment(e.target.value)}/>
                                             </div>
                                         </div>
+                                        <span className="error">
+                                            {error}
+                                        </span>
                                     </div>
                                 : ''
                             }
