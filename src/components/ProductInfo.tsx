@@ -3,13 +3,17 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from 'react-router-dom';
 import { useState } from "react";
+import { useDispatch } from 'react-redux';
 
 import { Link } from "react-router-dom";
 
 import { IProductInfo } from "../schemas/productinfo";
+import { setCount } from '../store/store';
 import '../styles/ProductInfo.scss';
 
 const ProductInfo: React.FC<IProductInfo> = ({id, name, description, brand, price, imageUrl}) => {
+    const dispatch = useDispatch();
+    
     const navigate = useNavigate();
     const [isAddedToCart, setIsAddedToCart] = useState<boolean>(false);
 
@@ -30,6 +34,18 @@ const ProductInfo: React.FC<IProductInfo> = ({id, name, description, brand, pric
             setIsAddedToCart(true);
         })
         .catch(error => {  });
+
+        setTimeout(() => {
+            axios.get(`${process.env.REACT_APP_BASE_API_URL}/carts/amountOfItems`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }}).then(response => {
+            const amount = response.data;
+            console.log(amount);
+            dispatch(setCount(amount));
+            }).catch(error => console.log(error));
+        }, 300);
+        
     }
     
     return (

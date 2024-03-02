@@ -32,7 +32,8 @@ const Footer: React.FC = () => {
                     <p className="footer__subtitle">Сервис возврата</p>
                     <p className="footer__subtitle">Политика гарантии</p>
                     <p className="footer__subtitle">Центр помощи</p>
-                    <p className="footer__subtitle">Продление гарантии</p>
+                    <a href={`${process.env.REACT_APP_BASE_API_URL}/orders/xlsx_report`} download>report</a>
+                    {/* <p className="footer__subtitle">Продление гарантии</p> */}
                 </div>
             </div>
         </footer>

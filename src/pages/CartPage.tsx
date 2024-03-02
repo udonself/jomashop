@@ -3,12 +3,16 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import Cookies from "js-cookie";
+import { useDispatch } from 'react-redux';
 
 import { ICartProduct } from "../schemas/cart";
+import { setCount } from '../store/store';
 import CartProduct from "../components/CartProduct";
 import '../styles/CartPage.scss';
 
 const CartPage: React.FC = () => {
+    const dispatch = useDispatch();
+
     const [cartProducts, setCartProducts] = useState<ICartProduct[] | null>(null);
     const [isPlacingOrder, setIsPlacingOrder] = useState<boolean>(false);
 
@@ -82,8 +86,18 @@ const CartPage: React.FC = () => {
             }}).then(response => {
             const data = response.data;
             setCartProducts(data);
-          })
-          .catch(error => {});
+        })
+        .catch(error => {});
+
+        axios.get(`${process.env.REACT_APP_BASE_API_URL}/carts/amountOfItems`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }}).then(response => {
+            const amount = response.data;
+            console.log(amount);
+            dispatch(setCount(amount));
+        })
+        .catch(error => console.log(error));
     }
 
     useEffect(() => {

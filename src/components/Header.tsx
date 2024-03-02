@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import axios from "axios";
+import Cookies from "js-cookie";
 
 import logo from '../icons/logo.png';
 import profileIcon from '../icons/profile-icon.svg';
@@ -10,9 +13,16 @@ import searchIcon from '../icons/search-icon.svg';
 import '../styles/Header.scss';
 import { KeyObject } from "crypto";
 import { keyboard } from "@testing-library/user-event/dist/keyboard";
+import { setCount } from '../store/store';
+
+interface Cart {
+    count: number;
+}  
 
 const Header: React.FC = () => {
     const [searchText, setSearchText] = useState<string>('');
+    const dispatch = useDispatch();
+    const cartItemsAmount = useSelector((state: any) => state.cart.count);
 
     const searchProducts = () => {
         if(searchText.length < 1) return;
@@ -21,6 +31,22 @@ const Header: React.FC = () => {
         if (searchWindow)
             searchWindow.location.href = `${window.location.origin}/products/search/${searchText}`;
     }
+
+    useEffect(() => {
+        let token = Cookies.get('token');
+        if (!token) {
+            return;
+        }
+        axios.get(`${process.env.REACT_APP_BASE_API_URL}/carts/amountOfItems`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }}).then(response => {
+            const amount = response.data;
+            console.log(amount);
+            dispatch(setCount(amount));
+          })
+          .catch(error => console.log(error));
+    }, []);
 
     return (
         <header className="header">
@@ -64,8 +90,15 @@ const Header: React.FC = () => {
                         <img src={profileIcon} alt="profile" />
                     </a>
                     {/* <img src={likeIcon} alt="like" /> */}
-                    <a href='/cart'>
+                    <a className="cart" href='/cart'>
                         <img src={cartIcon} alt="cart" />
+                        {
+                            cartItemsAmount > 0 ? 
+                                <div className="cart__amount">
+                                    {cartItemsAmount}
+                                </div>
+                            : ''
+                        }
                     </a>
                     
                 </div>
