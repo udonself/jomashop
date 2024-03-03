@@ -16,6 +16,9 @@ const CartPage: React.FC = () => {
     const [cartProducts, setCartProducts] = useState<ICartProduct[] | null>(null);
     const [isPlacingOrder, setIsPlacingOrder] = useState<boolean>(false);
 
+    const [isDiscount, setIsDiscount] = useState<boolean>(false);
+    const [totalPrice, setTotalPrice] = useState<number | null> (null);
+
     // order details
     const [phone, setPhone] = useState<string>('');
     const [city, setCity] = useState<string>('');
@@ -71,6 +74,7 @@ const CartPage: React.FC = () => {
         axios.post(`${process.env.REACT_APP_BASE_API_URL}/orders/create`, data, { headers })
         .then(response => {
             navigate(`/profile`);
+            dispatch(setCount(0));
         })
         .catch(error => {  });
     }
@@ -85,6 +89,7 @@ const CartPage: React.FC = () => {
               Authorization: `Bearer ${token}`
             }}).then(response => {
             const data = response.data;
+            calculateTotalPrice(data);
             setCartProducts(data);
         })
         .catch(error => {});
@@ -98,6 +103,16 @@ const CartPage: React.FC = () => {
             dispatch(setCount(amount));
         })
         .catch(error => console.log(error));
+    }
+
+    const calculateTotalPrice = (products: ICartProduct[]) => {
+        let price = products?.map(p => p.totalPrice).reduce((sum, current) => sum + current, 0);
+        setTotalPrice(price);
+        if (price >= 100) {
+            setIsDiscount(true);
+            return;
+        }
+        setIsDiscount(false);
     }
 
     useEffect(() => {
@@ -126,7 +141,13 @@ const CartPage: React.FC = () => {
                 cartProducts ?
                     cartProducts.length != 0 ?
                         <>
-                            <b className="cart-page__total-price">Итого: {cartProducts.map(p => p.totalPrice).reduce((sum, current) => sum + current, 0)} BYN</b>
+                            <b className="cart-page__total-price">Итого:&nbsp;{
+                                isDiscount ?
+                                    <div>
+                                        <s>{totalPrice}</s> {totalPrice ? Math.floor(totalPrice - totalPrice * 0.1) : ''}
+                                    </div>
+                                : totalPrice
+                            } BYN</b>
                             {
                                 isPlacingOrder ? 
                                     <div className="order-details">
@@ -134,25 +155,25 @@ const CartPage: React.FC = () => {
                                         <div className="order-details__row row2">
                                             <div className="order-details__column column2">
                                                 <h5 className="order-details__title">Телефон</h5>
-                                                <input type="text" className="order-details__input" value={phone} onChange={(e) => setPhone(e.target.value)}/>
+                                                <input placeholder="+375291921837" type="text" className="order-details__input" value={phone} onChange={(e) => setPhone(e.target.value)}/>
                                             </div>
                                             <div className="order-details__column column2">
                                                 <h5 className="order-details__title">Город</h5>
-                                                <input type="text" className="order-details__input"  value={city} onChange={(e) => setCity(e.target.value)}/>
+                                                <input placeholder="Минск" type="text" className="order-details__input"  value={city} onChange={(e) => setCity(e.target.value)}/>
                                             </div>
                                         </div>
                                         <div className="order-details__row row3">
                                             <div className="order-details__column column3">
                                                 <h5 className="order-details__title">Улица</h5>
-                                                <input type="text" className="order-details__input" value={street} onChange={(e) => setStreet(e.target.value)}/>
+                                                <input placeholder="Кижеватова" type="text" className="order-details__input" value={street} onChange={(e) => setStreet(e.target.value)}/>
                                             </div>
                                             <div className="order-details__column column3">
                                                 <h5 className="order-details__title">Дом</h5>
-                                                <input type="text" className="order-details__input" value={house} onChange={(e) => setHouse(e.target.value)}/>
+                                                <input placeholder="119" type="text" className="order-details__input" value={house} onChange={(e) => setHouse(e.target.value)}/>
                                             </div>
                                             <div className="order-details__column column3">
                                                 <h5 className="order-details__title">Квартира</h5>
-                                                <input type="text" className="order-details__input" value={apartment} onChange={(e) => setApartment(e.target.value)}/>
+                                                <input placeholder="293" type="text" className="order-details__input" value={apartment} onChange={(e) => setApartment(e.target.value)}/>
                                             </div>
                                         </div>
                                         <span className="error">

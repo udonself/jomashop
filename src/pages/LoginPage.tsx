@@ -8,6 +8,8 @@ import '../styles/LoginPage.scss';
 
 
 const LoginForm: React.FC = () => {
+    const [loading, setLoading] = useState<boolean>(false);
+
     const [isRegistration, setIsRegistration] = useState<boolean>(false);
 
     const [login, setLogin] = useState<string>('');
@@ -31,6 +33,7 @@ const LoginForm: React.FC = () => {
     }
 
     const HandleLoginClick = () => {
+        if(loading) return;
         switch (isRegistration) {
             case true: { // register
                 let error: boolean = false;
@@ -42,11 +45,13 @@ const LoginForm: React.FC = () => {
                     setPasswordError('Минимальная длина - 5 символов');
                     error = true;
                 }
-                 if(!/^.{5,}$/.test(repeatPassword)){
-                    setRepeatPasswordError('Минимальная длина - 5 символов');
+                 if(password !== repeatPassword){
+                    setRepeatPasswordError('Пароли не совпадают');
                     error = true;
                 }
                 if(error) return;
+
+                setLoading(true);
 
                 let registerParams = {
                     username: login,
@@ -62,12 +67,16 @@ const LoginForm: React.FC = () => {
                     if(error.response){
                         setError(error.response.data.detail);
                     }
-                })
+                }).finally(() => {
+                    setLoading(false);
+                });
 
                 break;
             }
             case false: { // login
-                //
+                
+                setLoading(true);
+
                 let loginApiUrl = `${process.env.REACT_APP_BASE_API_URL}/users/auth`;
                 let loginParams = {
                     username: login,
@@ -77,14 +86,16 @@ const LoginForm: React.FC = () => {
                 .then(function (response) {
                     console.log(response);
                     Cookies.set('token', response.data.token);
-                    navigate(`/profile`);
+                    navigate(`/`);
                 })
                 .catch(function (error) {
                     if(error.response){
                         // setErrorText(error.response.data.detail);
                         setError(error.response.data.detail);
                     }
-                })
+                }).finally(() => {
+                    setLoading(false);
+                });
 
                 break;
             }
@@ -112,16 +123,20 @@ const LoginForm: React.FC = () => {
             }
             <div className="lform__btn" onClick={HandleLoginClick}>
                 {
-                    isRegistration
-                    ? 'Зарегистрироваться'
-                    : 'Войти'
+                    loading ?
+                        <img className="lform__loader-image" src="https://telegra.ph/file/a8dd37837ec0b0713e822.gif" alt="loading" />
+                    :
+                        isRegistration ?
+                            'Зарегистрироваться'
+                        : 'Войти'
                 }
             </div>
             <p className="lform__mode-changer" onClick={changeMode}>
                 {
-                    isRegistration
-                    ? <span>Еще нет аккаунта? <u>Зарегистрироваться</u></span>
-                    : <span>Уже есть аккаунт? <u>Войти</u></span>
+                    !isRegistration ?
+                        <span>Еще нет аккаунта? <u>Зарегистрироваться</u></span>
+                    :
+                        <span>Уже есть аккаунт? <u>Войти</u></span>
                 }  
             </p>
         </div>

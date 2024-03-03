@@ -16,6 +16,10 @@
         align-items: center;
         gap: 5px;
 
+        &__loader-image{
+            width: 25px;
+        }
+
 
         &__title {
             margin: 0;
@@ -40,8 +44,11 @@
             padding: 10px 10px;
             color: #fff;
             background: #000;
-            text-align: center;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
         }
 
         &__mode-changer {

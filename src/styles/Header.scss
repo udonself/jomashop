@@ -6,6 +6,12 @@
 
     .logo {
         width: 182px;
+
+        @media (max-width: 468px) {
+            & {
+                width: 162px;
+            }
+        }
     }
 
     .cart {

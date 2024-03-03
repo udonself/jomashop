@@ -11,8 +11,6 @@ import likeIcon from '../icons/like-icon.svg';
 import cartIcon from '../icons/cart-icon.svg';
 import searchIcon from '../icons/search-icon.svg';
 import '../styles/Header.scss';
-import { KeyObject } from "crypto";
-import { keyboard } from "@testing-library/user-event/dist/keyboard";
 import { setCount } from '../store/store';
 
 interface Cart {
@@ -27,9 +25,7 @@ const Header: React.FC = () => {
     const searchProducts = () => {
         if(searchText.length < 1) return;
 
-        let searchWindow = window.open('', '_blank');
-        if (searchWindow)
-            searchWindow.location.href = `${window.location.origin}/products/search/${searchText}`;
+        window.location.href = `${window.location.origin}/products/search/${searchText}`;
     }
 
     useEffect(() => {
@@ -53,7 +49,7 @@ const Header: React.FC = () => {
             <div className="header__blacktop">
                 <div className="container blacktop-content">
                     <p id="go-shopping">
-                        Приступай к покупкам - <a href='/shopping'><u>ТОВАРЫ</u></a>
+                        Приступай к покупкам - <a href='/'><u>ТОВАРЫ</u></a>
                     </p>
                     <p id="callus">
                         Звоните (29) 284 56 23

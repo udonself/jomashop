@@ -67,7 +67,7 @@ const ProductInfo: React.FC<IProductInfo> = ({id, name, description, brand, pric
                     </div>
                     {
                         isAddedToCart ?
-                            <Link className="product-info__go-cart" to='/cart'>Перейти в корзину</Link>
+                            <Link className="product-info__go-cart" to='/cart'>Перейти в корзину →</Link>
                         : ''
                     }      
                 </div>

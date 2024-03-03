@@ -30,6 +30,18 @@
         }
     }
 
+    @media (max-width: 1250px) {
+        & {
+            width: 21%;
+        }
+    }
+
+    @media (max-width: 966px) {
+        & {
+            width: 26%;
+        }
+    }
+
     @media (max-width: 768px) {
         &__image {
             width: 100%;
