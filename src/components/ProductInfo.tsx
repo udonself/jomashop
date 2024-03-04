@@ -11,7 +11,7 @@ import { IProductInfo } from "../schemas/productinfo";
 import { setCount } from '../store/store';
 import '../styles/ProductInfo.scss';
 
-const ProductInfo: React.FC<IProductInfo> = ({id, name, description, brand, price, imageUrl}) => {
+const ProductInfo: React.FC<IProductInfo> = ({id, name, description, brand, price, imageUrl, inStock}) => {
     const dispatch = useDispatch();
     
     const navigate = useNavigate();
@@ -53,7 +53,10 @@ const ProductInfo: React.FC<IProductInfo> = ({id, name, description, brand, pric
             <div className="product-info__column">
                 <img className="product-info__image" src={imageUrl} alt="product" />
             </div>
-            <div className="product-info__column">
+            <div className="product-info__column info-column">
+                <span className="product-info__stock">{
+                    inStock === 0 ? 'Нет в наличии' : `В наличии: ${inStock}`
+                }</span>
                 <div className="product-info__data">
                     <h1 className="product-info__brand">{brand}</h1>
                     <h5 className="product-info__title">Название</h5>

@@ -4,5 +4,6 @@ export interface IProductInfo {
     brand: string,
     name: string,
     price: number,
-    description: string
+    description: string,
+    inStock: number
 }
