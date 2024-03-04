@@ -18,3 +18,16 @@ body, html {
   padding-left: 30px;
   padding-right: 30px;
 }
+
+.popup-wrapper {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  position: fixed;
+  background: rgba($color: #000, $alpha: .5);
+  // color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

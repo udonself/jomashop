@@ -15,3 +15,7 @@ declare module '*.png' {
     const pngPath: string;
     export default pngPath;
 }
+declare module '*.gif' {
+    const pngPath: string;
+    export default pngPath;
+}

@@ -10,6 +10,7 @@ import { setCount } from '../store/store';
 import CartProduct from "../components/CartProduct";
 import '../styles/CartPage.scss';
 
+
 const CartPage: React.FC = () => {
     const dispatch = useDispatch();
 
@@ -26,6 +27,7 @@ const CartPage: React.FC = () => {
     const [house, setHouse] = useState<string>('');
     const [apartment, setApartment] = useState<string>('');
 
+    // states to show specific order info
     const [error, setError] = useState<string>('');
 
     const navigate = useNavigate();

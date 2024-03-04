@@ -4,6 +4,7 @@ import axios from "axios";
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 
+import loaderImage from '../images/loader.gif';
 import '../styles/LoginPage.scss';
 
 
@@ -124,7 +125,7 @@ const LoginForm: React.FC = () => {
             <div className="lform__btn" onClick={HandleLoginClick}>
                 {
                     loading ?
-                        <img className="lform__loader-image" src="https://telegra.ph/file/a8dd37837ec0b0713e822.gif" alt="loading" />
+                        <img className="lform__loader-image" src={loaderImage} alt="loading" />
                     :
                         isRegistration ?
                             'Зарегистрироваться'
