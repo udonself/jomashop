@@ -178,6 +178,16 @@ const AdminPage: React.FC = () => {
                         Детализация заказов <img className="download" src={downloadImage} alt="" />
                     </div>
                 </a>
+                <a className="download-btn" href={`${process.env.REACT_APP_BASE_API_URL}/orders/xlsx/repleishments/${startDate}/${endDate}`} download>
+                    <div className="panel__btn">
+                        Пополнения <img className="download" src={downloadImage} alt="" />
+                    </div>
+                </a>
+                <a className="download-btn" href={`${process.env.REACT_APP_BASE_API_URL}/orders/xlsx/repleishments_sum/${startDate}/${endDate}`} download>
+                    <div className="panel__btn">
+                        Сумма пополнений <img className="download" src={downloadImage} alt="" />
+                    </div>
+                </a>
             </div>
         </div>
     )
