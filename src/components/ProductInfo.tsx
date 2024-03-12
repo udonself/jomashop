@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from 'react-router-dom';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 
 import { Link } from "react-router-dom";
@@ -13,9 +13,11 @@ import '../styles/ProductInfo.scss';
 
 const ProductInfo: React.FC<IProductInfo> = ({id, name, description, brand, price, imageUrl, inStock}) => {
     const dispatch = useDispatch();
-    
     const navigate = useNavigate();
-    const [isAddedToCart, setIsAddedToCart] = useState<boolean>(false);
+
+    const [cartAmount, setCartAmount] = useState<number | null>(null);
+    
+    const [error, setError] = useState<string | null>(null);
 
     const addToCart = () => {
         let token = Cookies.get('token');
@@ -31,22 +33,49 @@ const ProductInfo: React.FC<IProductInfo> = ({id, name, description, brand, pric
         };
         axios.post(`${process.env.REACT_APP_BASE_API_URL}/carts/add`, data, { headers })
         .then(response => {
-            setIsAddedToCart(true);
+            const data = response.data;
+            setCartAmount(data.new_quantity);
+            dispatch(setCount(data.total_items));
         })
-        .catch(error => {  });
-
-        setTimeout(() => {
-            axios.get(`${process.env.REACT_APP_BASE_API_URL}/carts/amountOfItems`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }}).then(response => {
-            const amount = response.data;
-            console.log(amount);
-            dispatch(setCount(amount));
-            }).catch(error => console.log(error));
-        }, 300);
-        
+        .catch(e => {});
     }
+
+    const addQuantity = (quantity: number) => {
+        let token = Cookies.get('token');
+        const headers = {
+            'Authorization': `Bearer ${token}`
+        };
+        const data = {
+            id: id,
+            quantity: quantity
+        };
+        axios.post(`${process.env.REACT_APP_BASE_API_URL}/carts/add`, data, { headers })
+        .then(response => {
+            const data = response.data;
+            console.log(data);
+            setCartAmount(data.new_quantity);
+            dispatch(setCount(data.total_items));
+            setError(null);
+        })
+        .catch(e => {
+            setError(e.response.data.detail.message);
+            setCartAmount(e.response.data.detail.new_quantity);
+        });
+    }
+
+    useEffect(() => {
+        let token = Cookies.get('token');
+        if (!token) {
+            navigate(`/login`);
+        }
+        axios.get(`${process.env.REACT_APP_BASE_API_URL}/carts/cartAmount/${id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }}).then(response => {
+            const data = response.data;
+            setCartAmount(data.amount);
+        })
+    }, []);
     
     return (
         <div className="product-info">
@@ -64,15 +93,22 @@ const ProductInfo: React.FC<IProductInfo> = ({id, name, description, brand, pric
                     <h5 className="product-info__title">Описание</h5>
                     <p className="product-info__description">{description}</p>
                 </div>
-                <div>
-                    <div className="add-to-cart-btn" onClick={addToCart}>
-                        Добавить в корзину
-                    </div>
+                <div style={{display: 'flex'}}>
                     {
-                        isAddedToCart ?
-                            <Link className="product-info__go-cart" to='/cart'>Перейти в корзину →</Link>
-                        : ''
-                    }      
+                        cartAmount ? 
+                            cartAmount > 0 ?
+                                <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}>
+                                    
+                                    <div className="quantity-changer">
+                                        <span className="quantity-changer__action" onClick={() => addQuantity(-1)}>-</span>
+                                        <span className="quantity-changer__value">{cartAmount}</span>
+                                        <span className="quantity-changer__action" onClick={() => addQuantity(1)}>+</span>
+                                    </div><span className={`${error ? 'error' : ''}`} style={{fontSize: '20px', color: '#A5A5A5'}}>{error ? error : 'Товар в корзине'}</span>
+                                </div>
+                            : <div className="add-to-cart-btn" onClick={addToCart}>Добавить в корзину</div>
+                        : <div className="add-to-cart-btn" onClick={addToCart}>Добавить в корзину</div>
+                    }
+                    {/* <span className={`${error ? 'error' : ''}`}>{error ? error : ''}</span> */}
                 </div>
             </div>
         </div>

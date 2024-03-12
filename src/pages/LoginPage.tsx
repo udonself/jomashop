@@ -3,12 +3,16 @@ import { useState } from "react";
 import axios from "axios";
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import loaderImage from '../images/loader.gif';
+import { setCount } from '../store/store';
 import '../styles/LoginPage.scss';
 
 
 const LoginForm: React.FC = () => {
+    const dispatch = useDispatch();
+
     const [loading, setLoading] = useState<boolean>(false);
 
     const [isRegistration, setIsRegistration] = useState<boolean>(false);
@@ -85,8 +89,10 @@ const LoginForm: React.FC = () => {
                 };
                 axios.get(loginApiUrl, {params: loginParams})
                 .then(function (response) {
-                    console.log(response);
-                    Cookies.set('token', response.data.token);
+                    // console.log(response);
+                    const data = response.data;
+                    Cookies.set('token', data.token);
+                    dispatch(setCount(data.total_items));
                     navigate(`/`);
                 })
                 .catch(function (error) {

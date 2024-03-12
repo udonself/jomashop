@@ -1,8 +1,10 @@
 import React from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useDispatch } from 'react-redux';
 
 import { ICartProduct } from "../schemas/cart";
+import { setCount } from '../store/store';
 import '../styles/CartProduct.scss';
 
 interface CartProductProps extends ICartProduct {
@@ -18,6 +20,8 @@ const CartProduct: React.FC<CartProductProps> = ({
     totalPrice,
     updateProducts
 }) => {
+    const dispatch = useDispatch();
+
     const addQuantity = (quantity: number) => {
         let token = Cookies.get('token');
         const headers = {
@@ -28,12 +32,12 @@ const CartProduct: React.FC<CartProductProps> = ({
             quantity: quantity
         };
         axios.post(`${process.env.REACT_APP_BASE_API_URL}/carts/add`, data, { headers })
-        .then(response => {  })
+        .then(response => {
+            const data = response.data;
+            dispatch(setCount(data.total_items));
+            updateProducts();
+        })
         .catch(error => {  });
-        setTimeout(
-            updateProducts,
-            500
-        );
     }
 
     return (

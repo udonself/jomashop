@@ -20,11 +20,14 @@ const ItemPage: React.FC = () => {
     }, []);
     
     return (
-        <div className="item-page container" style={{marginTop: 60}}>
+        <div className="item-page container" style={{marginTop: 60, minHeight: 600}}>
             {
                 product ?
                     <ProductInfo {...product}/>
-                : ''
+                :
+                <div className="centered" style={{width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                    <div className="loader"></div>
+                </div>
             }
             
         </div>

@@ -50,28 +50,6 @@
         align-self: end;
     }
 
-    .quantity-changer {
-        background: #000;
-        border-radius: 10px;
-        font-size: 22px;
-        display: flex;
-        align-items: center;
-        color: #fff;
-        height: 40px;
-
-        &__action {
-            padding: 0 10px;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        &__value {
-            font-size: 19px;
-        }
-    }
-
     @media (max-width: 813px) {
         & {
             flex-direction: column;

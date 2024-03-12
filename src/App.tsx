@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import MainPage from './pages/MainPage';
+import AdminPage from './pages/AdminPage';
 import SearchPage from './pages/SearchPage';
 import ProfilePage from './pages/ProfilePage';
 import CartPage from './pages/CartPage';
@@ -16,7 +17,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <Header />
-      <BrowserRouter basename="">
+      {/* <BrowserRouter> */}
         <Routes>
           <Route path="/" Component={MainPage}/>
           <Route path="/login" Component={LoginPage}/>
@@ -27,9 +28,11 @@ const App: React.FC = () => {
           <Route path="/cart" Component={CartPage} />
           <Route path="/profile" Component={ProfilePage}/>
           <Route path="/products/search/:pattern" Component={SearchPage}/>
+
+          <Route path='panel' Component={AdminPage}/>
           {/* <Route path="/products/search/:searchQuery" Component={ProductsPage} /> */}
         </Routes>
-      </BrowserRouter>
+      {/* </BrowserRouter> */}
       <Footer />
     </div>
   );

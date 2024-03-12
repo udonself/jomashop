@@ -77,6 +77,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
     amountOfProducts,
     date,
     totalPrice,
+    status,
     setIsPopupOpened,
     setOrderData
 }) => {
@@ -92,10 +93,29 @@ const OrderCard: React.FC<OrderCardProps> = ({
               Authorization: `Bearer ${token}`
             }}).then(response => {
             const data = response.data;
+            console.log(data);
             setOrderData(data);
             setIsPopupOpened(true);
           })
           .catch(error => {});
+    }
+
+    const statusInfo: any = {
+        "in progress": {
+            "className": "inprogress",
+            "displayName": "В обработке",
+            "tooltip": "Заказ находится в обработке, ожидайте звонка оператора"
+        },
+        "canceled": {
+            "className": "canceled",
+            "displayName": "Отменён",
+            "tooltip": "Заказ был отменен оператором"
+        },
+        "completed": {
+            "className": "completed",
+            "displayName": "Доставлен",
+            "tooltip": "Заказ был доставлен, приятного пользования!"
+        }
     }
 
     return(
@@ -106,6 +126,11 @@ const OrderCard: React.FC<OrderCardProps> = ({
             </div>
             <div className="order-card__column">
                 <span className="order-card__date">{date}</span>
+                <span
+                    title={statusInfo[status]['tooltip']}
+                    className={`order-card__status ${statusInfo[status]['className']}`}>
+                    {statusInfo[status]['displayName']}
+                </span>
             </div>
         </div>
     )

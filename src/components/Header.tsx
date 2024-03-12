@@ -38,7 +38,7 @@ const Header: React.FC = () => {
               Authorization: `Bearer ${token}`
             }}).then(response => {
             const amount = response.data;
-            console.log(amount);
+            // console.log(amount);
             dispatch(setCount(amount));
           })
           .catch(error => console.log(error));
@@ -57,13 +57,13 @@ const Header: React.FC = () => {
                 </div>
             </div>
             <div className="header__navline container">
-                <a href='/'>
+                <Link to='/'>
                     <img
                         className="logo"
                         src={logo}
                         alt="logo"
                     />
-                </a>
+                </Link>
                 
                 <div className="searh-container">
                     <input
@@ -82,11 +82,11 @@ const Header: React.FC = () => {
                     <img id='search-icon' src={searchIcon} alt="search" onClick={searchProducts}/>
                 </div>
                 <div className="navicons">
-                    <a href='/profile'>
+                    <Link to='/profile'>
                         <img src={profileIcon} alt="profile" />
-                    </a>
+                    </Link>
                     {/* <img src={likeIcon} alt="like" /> */}
-                    <a className="cart" href='/cart'>
+                    <Link className="cart" to='/cart'>
                         <img src={cartIcon} alt="cart" />
                         {
                             cartItemsAmount > 0 ? 
@@ -95,7 +95,7 @@ const Header: React.FC = () => {
                                 </div>
                             : ''
                         }
-                    </a>
+                    </Link>
                     
                 </div>
             </div>

@@ -2,5 +2,6 @@ export interface IOrder {
     id: number,
     amountOfProducts: number,
     date: string,
-    totalPrice: number
+    totalPrice: number,
+    status: string
 }

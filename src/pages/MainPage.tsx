@@ -32,7 +32,10 @@ const MainPage: React.FC = () => {
                         categories.map(
                             (category) => <CategoryCard {...category}/>
                         )
-                    : ''
+                    :
+                    <div className="category-loader">
+                        <div className="loader"></div>
+                    </div>
                 }
             </div>
         </div>
